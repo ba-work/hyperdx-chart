@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "otelCollector.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "otelCollector.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "otelCollector.name" . }}
+    spec:
+      containers:
+      - name: otel-collector
+        image: {{ include "otelCollector.image" . }}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.otelCollector.image.pullPolicy }}
+        ports:
+        {{ range $key, $val := fromYaml (include "otelCollector.ports" .) -}}
+        - name: {{ $key }}
+          containerPort: {{ $val }}
+        {{ end -}}
+        env:
+        - name: HYPERDX_LOG_LEVEL
+          value: {{ default "debug" .Values.otelCollector.logLevel }}

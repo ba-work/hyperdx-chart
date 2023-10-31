@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mongo.name" . }}
+spec:
+  selector:
+    app: {{ include "mongo.name" . }}
+  ports:
+  {{ range $key, $val := fromYaml (include "mongo.ports" .) -}}
+  - name: {{ $key }}
+    port: {{ $val }}
+  {{ end -}}

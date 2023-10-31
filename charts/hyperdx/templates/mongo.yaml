@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "mongo.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "mongo.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "mongo.name" . }}
+    spec:
+      containers:
+      - name: mongo
+        image: "{{ .Values.mongo.image.repository }}:{{ .Values.mongo.image.tag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.mongo.image.pullPolicy }}
+        ports:
+        {{ range $key, $val := fromYaml (include "mongo.ports" .) -}}
+        - name: {{ $key }}
+          containerPort: {{ $val }}
+        {{ end -}}

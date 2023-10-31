@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "taskCheckAlerts.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "taskCheckAlerts.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "taskCheckAlerts.name" . }}
+    spec:
+      containers:
+      - name: task-check-alerts
+        image: {{ include "taskCheckAlerts.image" . }}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.taskCheckAlerts.image.pullPolicy }}
+        command: [node]
+        args: [/app/build/tasks/index.js, check-alerts]
+        envFrom:
+        - secretRef:
+            name: {{ include "aggregator.secret.name" . }}
+        env:
+        - name: APP_TYPE
+          value: scheduled-task
+        - name: CLICKHOUSE_HOST
+          value: {{ include "clickhouse.host" . }}
+        - name: CLICKHOUSE_LOG_LEVEL
+          value: trace
+        - name: FRONTEND_URL
+          value: {{ include "frontend.url" . }} # need to be localhost (CORS)
+        - name: HDX_NODE_ADVANCED_NETWORK_CAPTURE
+          value: "1"
+        - name: HDX_NODE_BETA_MODE
+          value: "0"
+        - name: HDX_NODE_CONSOLE_CAPTURE
+          value: "1"
+        - name: HYPERDX_LOG_LEVEL
+          value: {{ default "debug" .Values.taskCheckAlerts.logLevel }}
+        - name: INGESTOR_API_URL
+          value: {{ include "ingestor.api.url" . }}
+        - name: MINER_API_URL
+          value: {{ include "miner.api.url" . }}
+        - name: MONGO_URI
+          value: {{ include "mongo.uri" . }}
+        - name: NODE_ENV
+          value: development
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: {{ include "otel.exporter.otlp.endpoint" . }}
+        - name: OTEL_SERVICE_NAME
+          value: {{ include "taskCheckAlerts.name" . }}
+        - name: REDIS_URL
+          value: {{ include "redis.url" . }}

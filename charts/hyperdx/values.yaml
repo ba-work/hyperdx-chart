@@ -1,0 +1,116 @@
+app:
+  replicas: 1
+  image: {}
+  logLevel: debug
+  #  repository: ghcr.io/hyperdxio/hyperdx
+  #  tag: defaults to app-{{ .Chart.AppVersion }}
+  #  pullPolicy: IfNotPresent
+  #  pullSecret:
+
+
+miner:
+  replicas: 1
+  image: {}
+  #  repository: ghcr.io/hyperdxio/hyperdx
+  #  tag: defaults to miner-{{ .Chart.AppVersion }}
+  #  pullPolicy: IfNotPresent
+  #  pullSecret:
+  # logLevel: debug
+
+api:
+  replicas: 1
+  image: {}
+  #  repository: ghcr.io/hyperdxio/hyperdx
+  #  tag: defaults to api-{{ .Chart.AppVersion }}
+  #  pullPolicy: IfNotPresent
+  #  pullSecret:
+  # logLevel: debug
+  clickhouseAuth:
+    username: api
+    password: api
+    createSecret: true
+    # secretName:
+
+taskCheckAlerts:
+  replicas: 1
+  image: {}
+  #  repository: ghcr.io/hyperdxio/hyperdx
+  #  tag: defaults to api-{{ .Chart.AppVersion }}
+  #  pullPolicy: IfNotPresent
+  #  pullSecret:
+  clickhouseAuth:
+    username: worker
+    password: worker
+    createSecret: true
+    # secretName:
+
+ingestor:
+  replicas: 1
+  image: {}
+  #  repository: ghcr.io/hyperdxio/hyperdx
+  #  tag: defaults to ingestor-{{ .Chart.AppVersion }}
+  #  pullPolicy: IfNotPresent
+  #  pullSecret:
+  # logLevel: debug
+
+otelCollector:
+  replicas: 1
+  image: {}
+  #   repository: ghcr.io/hyperdxio/hyperdx
+  #   tag: defaults to otel-collector-{{ .Chart.AppVersion }}
+  #   pullPolicy: IfNotPresent
+  #   pullSecret:
+  # logLevel: debug
+
+hostmetrics:
+  replicas: 1
+  image: {}
+  #   repository: ghcr.io/hyperdxio/hyperdx
+  #   tag: defaults to hostmetrics-{{ .Chart.AppVersion }}
+  #   pullPolicy: IfNotPresent
+  #   pullSecret:
+  # logLevel: debug
+
+aggregator:
+  replicas: 1
+  image: {}
+  #   repository: ghcr.io/hyperdxio/hyperdx
+  #   tag: defaults to api-{{ .Chart.AppVersion }}
+  #   pullPolicy: IfNotPresent
+  #   pullSecret:
+  # logLevel: debug
+  clickhouseAuth:
+    username: aggregator
+    password: aggregator
+    createSecret: true
+    # secretName:
+
+clickhouse:
+  replicas: 1
+  image:
+    repository: clickhouse/clickhouse-server
+    tag: 23.7.1-alpine
+    # pullPolicy: IfNotPresent
+    # pullSecret:
+  # logLevel: debug
+
+mongo:
+  replicas: 1
+  image:
+    repository: mongo
+    tag: 5.0.14-focal
+    # pullPolicy: IfNotPresent
+    # pullSecret:
+
+redis:
+  replicas: 1
+  image:
+    repository: redis
+    tag: 7.0.11-alpine
+    # pullPolicy: IfNotPresent
+    # pullSecret:
+
+ingress:
+  enabled: false
+  # hostname:
+  # tls:

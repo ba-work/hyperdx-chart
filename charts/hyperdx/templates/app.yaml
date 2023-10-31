@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "app.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "app.name" . }}
+    spec:
+      containers:
+      - name: app
+        image: {{ include "app.image" . }}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.app.image.pullPolicy }}
+        ports:
+        {{ range $key, $val := fromYaml (include "app.ports" .) -}}
+        - name: {{ $key }}
+          containerPort: {{ $val }}
+        {{ end -}}
+        env:
+        - name: PORT
+          value: "{{ (fromYaml (include "app.ports" .)).app }}"
+        - name: NODE_ENV
+          value: development

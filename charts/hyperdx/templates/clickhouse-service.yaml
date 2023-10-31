@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "clickhouse.name" . }}
+spec:
+  selector:
+    app: {{ include "clickhouse.name" . }}
+  ports:
+  {{ range $key, $val := fromYaml (include "clickhouse.ports" .) -}}
+  - name: {{ $key }}
+    port: {{ $val }}
+  {{ end -}}

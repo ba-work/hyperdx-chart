@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ingestor.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "ingestor.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "ingestor.name" . }}
+    spec:
+      containers:
+      - name: ingestor
+        image: {{ include "ingestor.image" . }}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.ingestor.image.pullPolicy }}
+        ports:
+        {{ range $key, $val := fromYaml (include "ingestor.ports" .) -}}
+        - name: {{ $key }}
+          containerPort: {{ $val }}
+        {{ end -}}
+        env:
+        - name: RUST_BACKTRACE
+          value: full
+        - name: VECTOR_OPENSSL_LEGACY_PROVIDER
+          value: "false"
+        - name: VECTOR_LOG
+          value: {{ default "debug" .Values.ingestor.logLevel }}

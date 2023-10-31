@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "clickhouse.configmap.name" . }}
+data:
+  config.xml: |
+{{ tpl (.Files.Get "clickhouse/config.xml") . | indent 4 }}

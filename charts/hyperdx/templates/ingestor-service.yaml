@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ingestor.name" . }}
+spec:
+  selector:
+    app: {{ include "ingestor.name" . }}
+  ports:
+  {{ range $key, $val := fromYaml (include "ingestor.ports" .) -}}
+  - name: {{ $key }}
+    port: {{ $val }}
+  {{ end -}}

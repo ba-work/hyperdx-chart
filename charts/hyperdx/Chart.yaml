@@ -1,0 +1,4 @@
+apiVersion: v2
+name: hyperdx
+version: 0.0.1
+appVersion: 1.1.3

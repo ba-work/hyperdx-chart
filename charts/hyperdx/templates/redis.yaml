@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "redis.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "redis.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "redis.name" . }}
+    spec:
+      containers:
+      - name: redis
+        image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.redis.image.pullPolicy }}
+        ports:
+        {{ range $key, $val := fromYaml (include "redis.ports" .) -}}
+        - name: {{ $key }}
+          containerPort: {{ $val }}
+        {{ end -}}

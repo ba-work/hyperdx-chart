@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "miner.name" . }}
+spec:
+  selector:
+    app: {{ include "miner.name" . }}
+  ports:
+  {{ range $key, $val := fromYaml (include "miner.ports" .) -}}
+  - name: {{ $key }}
+    port: {{ $val }}
+  {{ end -}}

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hostmetrics.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "hostmetrics.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "hostmetrics.name" . }}
+    spec:
+      containers:
+      - name: hostmetrics
+        image: {{ include "hostmetrics.image" . }}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.hostmetrics.image.pullPolicy }}
+        env:
+        - name: HYPERDX_LOG_LEVEL
+          value: {{ default "debug" .Values.hostmetrics.logLevel }}
+        - name: OTEL_SERVICE_NAME
+          value: {{ include "miner.name" . }}

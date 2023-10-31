@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "aggregator.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "aggregator.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "aggregator.name" . }}
+    spec:
+      containers:
+      - name: aggregator
+        image: {{ include "aggregator.image" . }}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.aggregator.image.pullPolicy }}
+        ports:
+        {{ range $key, $val := fromYaml (include "aggregator.ports" .) -}}
+        - name: {{ $key }}
+          containerPort: {{ $val }}
+        {{ end -}}
+        envFrom:
+        - secretRef:
+            name: {{ include "aggregator.secret.name" . }}
+        env:
+        - name: APP_TYPE
+          value: aggregator
+        - name: CLICKHOUSE_HOST
+          value: {{ include "clickhouse.host" . }}
+        - name: HYPERDX_LOG_LEVEL
+          value: {{ default "debug" .Values.aggregator.logLevel }}
+        - name: FRONTEND_URL
+          value: {{ include "frontend.url" . }} # need to be localhost (CORS)
+        - name: MONGO_URI
+          value: {{ include "mongo.uri" . }}
+        - name: NODE_ENV
+          value: development
+        - name: PORT
+          value: "{{ (fromYaml (include "aggregator.ports" .)).aggregator }}"
+        - name: REDIS_URL
+          value: {{ include "redis.url" . }}
+        - name: SERVER_URL
+          value: {{ include "server.url" . }}

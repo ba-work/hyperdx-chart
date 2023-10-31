@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "clickhouse.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "clickhouse.name" . }}
+  replicas: {{ default 1 .Values.app.replicas | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "clickhouse.name" . }}
+    spec:
+      containers:
+      - name: clickhouse
+        image: "{{ .Values.clickhouse.image.repository }}:{{ .Values.clickhouse.image.tag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.clickhouse.image.pullPolicy }}
+        ports:
+        {{ range $key, $val := fromYaml (include "clickhouse.ports" .) -}}
+        - name: {{ $key }}
+          containerPort: {{ $val }}
+        {{ end -}}
+        env:
+        - name: CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT
+          value: "1"
+        volumeMounts:
+        - name: config
+          mountPath: /etc/clickhouse-server/config.xml
+          subPath: config.xml
+        - name: users
+          mountPath: /etc/clickhouse-server/users.xml
+          subPath: users.xml
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "clickhouse.configmap.name" . }}
+          items:
+          - key: config.xml
+            path: config.xml
+      - name: users
+        secret:
+          secretName: {{ include "clickhouse.secret.name" . }}
+          items:
+          - key: users.xml
+            path: users.xml
