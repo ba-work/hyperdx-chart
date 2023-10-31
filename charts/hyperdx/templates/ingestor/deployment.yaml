@@ -28,3 +28,15 @@ spec:
           value: "false"
         - name: VECTOR_LOG
           value: {{ default "debug" .Values.ingestor.logLevel }}
+    {{- if .Values.ingestor.tolerations }}
+      tolerations: {{ toYaml .Values.ingestor.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.ingestor.affinity }}
+      affinity: {{ toYaml .Values.ingestor.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.ingestor.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.ingestor.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.ingestor.strategy }}
+  strategy: {{ toYaml .Values.ingestor.strategy | nindent 4 }}
+{{- end }}

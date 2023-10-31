@@ -26,3 +26,15 @@ spec:
           value: "{{ (fromYaml (include "app.ports" .)).app }}"
         - name: NODE_ENV
           value: development
+    {{- if .Values.app.tolerations }}
+      tolerations: {{ toYaml .Values.app.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.app.affinity }}
+      affinity: {{ toYaml .Values.app.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.app.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.app.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.app.strategy }}
+  strategy: {{ toYaml .Values.app.strategy | nindent 4 }}
+{{- end }}

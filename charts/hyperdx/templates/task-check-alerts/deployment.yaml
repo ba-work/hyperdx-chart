@@ -52,3 +52,15 @@ spec:
           value: {{ include "taskCheckAlerts.name" . }}
         - name: REDIS_URL
           value: {{ include "redis.url" . }}
+    {{- if .Values.taskCheckAlerts.tolerations }}
+      tolerations: {{ toYaml .Values.taskCheckAlerts.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.taskCheckAlerts.affinity }}
+      affinity: {{ toYaml .Values.taskCheckAlerts.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.taskCheckAlerts.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.taskCheckAlerts.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.taskCheckAlerts.strategy }}
+  strategy: {{ toYaml .Values.taskCheckAlerts.strategy | nindent 4 }}
+{{- end }}

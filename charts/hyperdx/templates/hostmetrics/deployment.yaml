@@ -21,3 +21,15 @@ spec:
           value: {{ default "debug" .Values.hostmetrics.logLevel }}
         - name: OTEL_SERVICE_NAME
           value: {{ include "miner.name" . }}
+    {{- if .Values.hostmetrics.tolerations }}
+      tolerations: {{ toYaml .Values.hostmetrics.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.hostmetrics.affinity }}
+      affinity: {{ toYaml .Values.hostmetrics.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.hostmetrics.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.hostmetrics.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.hostmetrics.strategy }}
+  strategy: {{ toYaml .Values.hostmetrics.strategy | nindent 4 }}
+{{- end }}

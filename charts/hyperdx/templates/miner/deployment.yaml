@@ -32,3 +32,15 @@ spec:
           value: {{ include "otel.exporter.otlp.endpoint" . }}
         - name: OTEL_SERVICE_NAME
           value: {{ include "miner.name" . }}
+    {{- if .Values.miner.tolerations }}
+      tolerations: {{ toYaml .Values.miner.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.miner.affinity }}
+      affinity: {{ toYaml .Values.miner.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.miner.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.miner.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.miner.strategy }}
+  strategy: {{ toYaml .Values.miner.strategy | nindent 4 }}
+{{- end }}

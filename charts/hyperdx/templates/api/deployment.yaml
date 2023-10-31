@@ -65,3 +65,15 @@ spec:
           value: http://localhost:{{ (fromYaml (include "api.ports" .)).api }}
         - name: USAGE_STATS_ENABLED
           value: "false"
+    {{- if .Values.api.tolerations }}
+      tolerations: {{ toYaml .Values.api.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.api.affinity }}
+      affinity: {{ toYaml .Values.api.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.api.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.api.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.api.strategy }}
+  strategy: {{ toYaml .Values.api.strategy | nindent 4 }}
+{{- end }}

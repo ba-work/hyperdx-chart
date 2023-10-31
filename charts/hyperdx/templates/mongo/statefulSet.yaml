@@ -21,7 +21,7 @@ spec:
         - name: {{ $key }}
           containerPort: {{ $val }}
         {{ end -}}
-      {{ if .Values.mongo.persistence.enabled -}}
+      {{- if .Values.mongo.persistence.enabled }}
         volumeMounts:
         - name: data
           mountPath: /data/db
@@ -32,4 +32,16 @@ spec:
       - metadata:
           name: data
         spec: {{ toYaml .Values.mongo.persistence.volumeClaimTemplateSpec | nindent 10 }}
-      {{ end -}}
+      {{- end }}
+    {{- if .Values.mongo.tolerations }}
+      tolerations: {{ toYaml .Values.mongo.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.mongo.affinity }}
+      affinity: {{ toYaml .Values.mongo.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.mongo.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.mongo.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.mongo.strategy }}
+  strategy: {{ toYaml .Values.mongo.strategy | nindent 4 }}
+{{- end }}

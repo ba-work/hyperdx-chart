@@ -1,11 +1,16 @@
 app:
   replicas: 1
   image: {}
-  logLevel: debug
   #  repository: ghcr.io/hyperdxio/hyperdx
   #  tag: defaults to app-{{ .Chart.AppVersion }}
   #  pullPolicy: IfNotPresent
   #  pullSecret:
+  # logLevel: debug
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 
 miner:
@@ -16,6 +21,11 @@ miner:
   #  pullPolicy: IfNotPresent
   #  pullSecret:
   # logLevel: debug
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 api:
   replicas: 1
@@ -30,6 +40,11 @@ api:
     password: api
     createSecret: true
     # secretName:
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 taskCheckAlerts:
   replicas: 1
@@ -43,6 +58,11 @@ taskCheckAlerts:
     password: worker
     createSecret: true
     # secretName:
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 ingestor:
   replicas: 1
@@ -52,6 +72,11 @@ ingestor:
   #  pullPolicy: IfNotPresent
   #  pullSecret:
   # logLevel: debug
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 otelCollector:
   replicas: 1
@@ -61,6 +86,11 @@ otelCollector:
   #   pullPolicy: IfNotPresent
   #   pullSecret:
   # logLevel: debug
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 hostmetrics:
   replicas: 1
@@ -70,6 +100,11 @@ hostmetrics:
   #   pullPolicy: IfNotPresent
   #   pullSecret:
   # logLevel: debug
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 aggregator:
   replicas: 1
@@ -84,6 +119,11 @@ aggregator:
     password: aggregator
     createSecret: true
     # secretName:
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 clickhouse:
   replicas: 1
@@ -100,6 +140,11 @@ clickhouse:
     #  accessModes: ["ReadWriteOnce"]
     #  resources:
     #    requests: 5Gi
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 mongo:
   replicas: 1
@@ -115,6 +160,11 @@ mongo:
     #  accessModes: ["ReadWriteOnce"]
     #  resources:
     #    requests: 5Gi
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 redis:
   replicas: 1
@@ -130,7 +180,11 @@ redis:
     #  accessModes: ["ReadWriteOnce"]
     #  resources:
     #    requests: 5Gi
-
+  # resources:
+  # tolerations:
+  # affinity:
+  # nodeSelector:
+  # strategy:
 
 ingress:
   enabled: false

@@ -24,3 +24,15 @@ spec:
         env:
         - name: HYPERDX_LOG_LEVEL
           value: {{ default "debug" .Values.otelCollector.logLevel }}
+    {{- if .Values.otelCollector.tolerations }}
+      tolerations: {{ toYaml .Values.otelCollector.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.otelCollector.affinity }}
+      affinity: {{ toYaml .Values.otelCollector.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.otelCollector.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.otelCollector.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.otelCollector.strategy }}
+  strategy: {{ toYaml .Values.otelCollector.strategy | nindent 4 }}
+{{- end }}

@@ -43,3 +43,15 @@ spec:
           value: {{ include "redis.url" . }}
         - name: SERVER_URL
           value: {{ include "server.url" . }}
+    {{- if .Values.aggregator.tolerations }}
+      tolerations: {{ toYaml .Values.aggregator.tolerations | nindent 8 }}
+    {{- end }}
+    {{- if .Values.aggregator.affinity }}
+      affinity: {{ toYaml .Values.aggregator.affinity | nindent 8 }}
+    {{- end }}
+    {{- if .Values.aggregator.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.aggregator.nodeSelector | nindent 8 }}
+    {{- end }}
+{{- if .Values.aggregator.strategy }}
+  strategy: {{ toYaml .Values.aggregator.strategy | nindent 4 }}
+{{- end }}
