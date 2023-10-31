@@ -14,6 +14,9 @@ spec:
     spec:
       containers:
       - name: clickhouse
+        securityContext:
+          capabilities:
+            add: ["SYS_NICE", "NET_ADMIN", "IPC_LOCK"]
         image: "{{ .Values.clickhouse.image.repository }}:{{ .Values.clickhouse.image.tag }}"
         imagePullPolicy: {{ default "IfNotPresent" .Values.clickhouse.image.pullPolicy }}
         ports:
@@ -31,10 +34,10 @@ spec:
         - name: users
           mountPath: /etc/clickhouse-server/users.xml
           subPath: users.xml
-        {{ if .Values.clickhouse.persistence.enabled -}}
+        {{ if .Values.clickhouse.persistence.enabled }}
         - name: data
           mountPath: /var/lib/clickhouse
-        {{ end -}}
+        {{ end }}
       volumes:
       - name: config
         configMap:
