@@ -93,6 +93,13 @@ clickhouse:
     # pullPolicy: IfNotPresent
     # pullSecret:
   # logLevel: debug
+  persistence:
+    enabled: false
+    volumeClaimTemplateSpec: {}
+    #  storageClassName: gp3
+    #  accessModes: ["ReadWriteOnce"]
+    #  resources:
+    #    requests: 5Gi
 
 mongo:
   replicas: 1
@@ -101,6 +108,13 @@ mongo:
     tag: 5.0.14-focal
     # pullPolicy: IfNotPresent
     # pullSecret:
+  persistence:
+    enabled: false
+    volumeClaimTemplateSpec: {}
+    #  stroageClassName: gp3
+    #  accessModes: ["ReadWriteOnce"]
+    #  resources:
+    #    requests: 5Gi
 
 redis:
   replicas: 1
@@ -109,6 +123,14 @@ redis:
     tag: 7.0.11-alpine
     # pullPolicy: IfNotPresent
     # pullSecret:
+  persistence:
+    enabled: false
+    volumeClaimTemplateSpec: {}
+    #  stroageClassName: gp3
+    #  accessModes: ["ReadWriteOnce"]
+    #  resources:
+    #    requests: 5Gi
+
 
 ingress:
   enabled: false
