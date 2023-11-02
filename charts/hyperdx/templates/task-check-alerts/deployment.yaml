@@ -1,3 +1,4 @@
+{{- if .Values.taskCheckAlerts.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -64,3 +65,4 @@ spec:
 {{- if .Values.taskCheckAlerts.strategy }}
   strategy: {{ toYaml .Values.taskCheckAlerts.strategy | nindent 4 }}
 {{- end }}
+{{- end -}}

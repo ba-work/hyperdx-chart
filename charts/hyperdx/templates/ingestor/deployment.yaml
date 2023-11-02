@@ -1,3 +1,4 @@
+{{- if .Values.ingestor.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -40,3 +41,4 @@ spec:
 {{- if .Values.ingestor.strategy }}
   strategy: {{ toYaml .Values.ingestor.strategy | nindent 4 }}
 {{- end }}
+{{- end -}}

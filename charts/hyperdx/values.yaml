@@ -1,4 +1,5 @@
 app:
+  enabled: true
   replicas: 1
   image: {}
   #  repository: ghcr.io/hyperdxio/hyperdx
@@ -14,6 +15,7 @@ app:
 
 
 miner:
+  enabled: true
   replicas: 1
   image: {}
   #  repository: ghcr.io/hyperdxio/hyperdx
@@ -28,6 +30,7 @@ miner:
   # strategy:
 
 api:
+  enabled: true
   replicas: 1
   image: {}
   #  repository: ghcr.io/hyperdxio/hyperdx
@@ -47,6 +50,7 @@ api:
   # strategy:
 
 taskCheckAlerts:
+  enabled: true
   replicas: 1
   image: {}
   #  repository: ghcr.io/hyperdxio/hyperdx
@@ -65,6 +69,7 @@ taskCheckAlerts:
   # strategy:
 
 ingestor:
+  enabled: true
   replicas: 1
   image: {}
   #  repository: ghcr.io/hyperdxio/hyperdx
@@ -79,6 +84,7 @@ ingestor:
   # strategy:
 
 otelCollector:
+  enabled: true
   replicas: 1
   image: {}
   #   repository: ghcr.io/hyperdxio/hyperdx
@@ -93,6 +99,7 @@ otelCollector:
   # strategy:
 
 hostmetrics:
+  enabled: true
   replicas: 1
   image: {}
   #   repository: ghcr.io/hyperdxio/hyperdx
@@ -107,6 +114,7 @@ hostmetrics:
   # strategy:
 
 aggregator:
+  enabled: true
   replicas: 1
   image: {}
   #   repository: ghcr.io/hyperdxio/hyperdx
@@ -126,6 +134,7 @@ aggregator:
   # strategy:
 
 clickhouse:
+  enabled: true
   replicas: 1
   image:
     repository: clickhouse/clickhouse-server
@@ -147,6 +156,7 @@ clickhouse:
   # strategy:
 
 mongo:
+  enabled: true
   replicas: 1
   image:
     repository: mongo
@@ -167,6 +177,7 @@ mongo:
   # strategy:
 
 redis:
+  enabled: true
   replicas: 1
   image:
     repository: redis

@@ -1,3 +1,4 @@
+{{- if .Values.api.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,3 +78,4 @@ spec:
 {{- if .Values.api.strategy }}
   strategy: {{ toYaml .Values.api.strategy | nindent 4 }}
 {{- end }}
+{{- end -}}
