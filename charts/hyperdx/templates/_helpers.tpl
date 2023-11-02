@@ -277,11 +277,19 @@ zipkin: 9411
 {{- end }}
 
 {{- define "clickhouse.configmap.name" -}}
-{{ include "clickhouse.name" . }}-config
+  {{- if .Values.clickhouse.usersXML.configMapName -}}
+    {{ .Values.clickhouse.usersXML.configMapName }}
+  {{- else -}}
+    {{ include "clickhouse.name" . }}-config
+  {{- end -}}
 {{- end }}
 
 {{- define "clickhouse.secret.name" -}}
-{{ include "clickhouse.name" . }}-users
+  {{- if .Values.clickhouse.usersXML.secretName -}}
+    {{ .Values.clickhouse.usersXML.secretName }}
+  {{- else -}}
+    {{ include "clickhouse.name" . }}-users
+  {{- end -}}
 {{- end }}
 
 {{- define "clickhouse.ports" -}}
