@@ -337,15 +337,27 @@ http://{{ include "otelCollector.name" . }}:{{ (fromYaml (include "otelCollector
 {{- end }}
 
 {{- define "clickhouse.host" -}}
-http://{{ include "clickhouse.name" . }}:{{ (fromYaml (include "clickhouse.ports" .)).http }}
+  {{- if (and (not .Values.clickhouse.enabled) .Values.clickhouse.url) -}}
+    {{ .Values.clickhouse.url }}
+  {{- else -}}
+    http://{{ include "clickhouse.name" . }}:{{ (fromYaml (include "clickhouse.ports" .)).http }}
+  {{- end -}}
 {{- end }}
 
 {{- define "mongo.uri" -}}
-mongodb://{{ include "mongo.name" . }}:{{ (fromYaml (include "mongo.ports" .)).mongo }}/hyperdx
+  {{- if (and (not .Values.mongo.enabled) .Values.mongo.url) -}}
+    {{ .Values.mongo.url }}
+  {{- else -}}
+    mongodb://{{ include "mongo.name" . }}:{{ (fromYaml (include "mongo.ports" .)).mongo }}/hyperdx
+  {{- end -}}
 {{- end }}
 
 {{- define "redis.url" -}}
-redis://{{ include "redis.name" . }}:{{ (fromYaml (include "redis.ports" .)).redis }}
+  {{- if (and (not .Values.redis.enabled) .Values.redis.url) -}}
+    {{ .Values.redis.url }}
+  {{- else -}}
+    redis://{{ include "redis.name" . }}:{{ (fromYaml (include "redis.ports" .)).redis }}
+  {{- end -}}
 {{- end }}
 
 {{- define "frontend.url" -}}

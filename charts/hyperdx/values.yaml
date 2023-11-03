@@ -135,6 +135,7 @@ aggregator:
 
 clickhouse:
   enabled: true
+  # url: only works when enabled is false
   replicas: 1
   image:
     repository: clickhouse/clickhouse-server
@@ -163,6 +164,7 @@ clickhouse:
 
 mongo:
   enabled: true
+  # url: only works when enabled is false
   replicas: 1
   image:
     repository: mongo
@@ -184,6 +186,7 @@ mongo:
 
 redis:
   enabled: true
+  # url: only works when enabled is false
   replicas: 1
   image:
     repository: redis
